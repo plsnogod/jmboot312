@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text; charset=UTF-8">
+    <title>Update Users</title>
+</head>
+<div align="center">
+    <body>
+    </table>
+    <h2>Update User</h2>
+    <br/>
+
+
+    <form method="POST" th:action="@{/admin/edit/{id} (id=*{id})}" th:object="${upd_user}" >
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td>
+
+                    <input type="text" name="name" th:field="*{name}">
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>
+                    <input type="text" name="lastname" th:field="*{lastname}">
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="text" name="email" th:field="*{email}">
+                </td>
+            </tr>
+            <tr>
+                <td>Login</td>
+                <td>
+                    <input type="text" name="email" th:field="*{login}">
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="text" name="email" th:field="*{password}">
+                </td>
+            </tr>
+            <tr>
+                <td> Role </td>
+                <td>
+                    <th:block th:each="Onerole : ${list_roles}">
+                        <input th:checked="${#lists.contains(upd_user.setRoles,Onerole)}" name="newRole"
+                               th:value="${Onerole.getNameRoles()}" type="checkbox"/>
+                        <label th:text="${Onerole.getNameRoles()}"></label>
+                    </th:block>
+                </td>
+            </tr>
+        </table>
+
+        <td colspan="3"> <input type="submit" value="Ok"> </td>
+    </form>
+    </body>
+</div>
+</html>
