@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text; charset=UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div align="center">
+    </table>
+    <h2>Add New User</h2>
+    <br/>
+
+
+    <form method="POST" th:action="@{/admin/add}" th:object="${new_user}" >
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td>
+
+                    <input type="text" name = "name" />
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>
+                    <input type="text" name="lastname" />
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="text" name="email" />
+                </td>
+            </tr>
+            <tr>
+                <td>Login</td>
+                <td>
+                    <input type="text" name="login" />
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="text" name="password" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <th:block th:each="roles : ${listRole}">
+                        <br>
+                        <input type="checkbox" name="newRole" th:value="${roles.getNameRoles()}" th:checked="${roles.getNameRoles() == 'ROLE_USER'}"/>
+                        <label th:text="${roles.getNameRoles()}"></label>
+                    </th:block>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3"> <input type="submit" value="Save User"/></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+</body>
+</html>
