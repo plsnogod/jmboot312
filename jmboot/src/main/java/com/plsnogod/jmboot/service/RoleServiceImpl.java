@@ -13,8 +13,8 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public Role findByRole(String name){
-        return roleRepository.findByRole(name);
+    public Role findByRole(String nameRoles){
+        return roleRepository.findRoleByNameRoles(nameRoles);
     }
     @Override
     public List<Role> list_roles() {
