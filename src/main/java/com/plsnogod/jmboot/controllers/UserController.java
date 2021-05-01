@@ -13,7 +13,7 @@ import java.security.Principal;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -23,13 +23,13 @@ public class UserController {
     public String getHomePage() {
         return "home_page";
     }
-
+//
     @GetMapping("/user")
-    public String clickMe(Model model, Principal principal) {
-         userService.getUserByName(principal.getName());
+    public String clickMe() {
+//         userService.getUserByName(principal.getName());
         return "page_user";
     }
-//    @GetMapping(value = "/user")
+//    @GetMapping
 //    public String userInfo(){
 //        return "page_user";
 //    }

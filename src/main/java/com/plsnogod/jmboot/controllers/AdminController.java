@@ -3,12 +3,11 @@ package com.plsnogod.jmboot.controllers;
 import com.plsnogod.jmboot.model.Role;
 import com.plsnogod.jmboot.model.User;
 import com.plsnogod.jmboot.service.RoleService;
-import com.plsnogod.jmboot.service.RoleServiceImpl;
 import com.plsnogod.jmboot.service.UserService;
-import com.plsnogod.jmboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/")
 public class AdminController {
     @Autowired
     private RoleService roleService;
@@ -25,12 +24,13 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/admin")
     public String showAllUsers(Model model) {
         List<User> list_user = userService.showAllUsers();
         model.addAttribute("all_roles", roleService.list_roles());
         model.addAttribute("all_us", list_user);
         model.addAttribute("new_user", new User());
+//        model.addAttribute("all_roles", roleService.list_roles());
         return "table_users";
     }
 
@@ -42,7 +42,7 @@ public class AdminController {
 //        return "add_user";
 //    }
 
-    @PostMapping()
+    @PostMapping("/admin")
     public String addUser(@ModelAttribute("new_user") User user,
                             @RequestParam(value = "select_role", required = false) String[] role) {
         Set<Role> roleSet = new HashSet<>();
@@ -68,7 +68,7 @@ public class AdminController {
 
     @PatchMapping(value = "/{id}")
     public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "select_role", required = false) String[] role) {
+                             @RequestParam(value = "select_roles", required = false) String[] role) {
         user.setSetRoles(getAddRole(role));
         userService.updateUser(user);
         return "redirect:/admin";
@@ -76,7 +76,7 @@ public class AdminController {
     }
 
 //    @GetMapping(value = "/delete/{id}")
-//    public String deleteUser(@PathVariable("id") Integer id) {
+//    public String deleteUser(@PathVariable("id") long id) {
 //        userService.deleteUser(id);
 //        return "redirect:/admin";
 //    }
@@ -89,7 +89,7 @@ public class AdminController {
         }
         return hashSet;
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
