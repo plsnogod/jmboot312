@@ -28,47 +28,58 @@ public class AdminController {
     @GetMapping
     public String showAllUsers(Model model) {
         List<User> list_user = userService.showAllUsers();
+        model.addAttribute("all_roles", roleService.list_roles());
         model.addAttribute("all_us", list_user);
-        return "all_users";
+        model.addAttribute("new_user", new User());
+        return "table_users";
     }
 
+//
+//    @GetMapping("/add_user")
+//    public String getUserForm(Model model) {
+//
+//        model.addAttribute("listRole", roleService.list_roles());
+//        return "add_user";
+//    }
 
-    @GetMapping("/add_user")
-    public String getUserForm(Model model) {
+    @PostMapping()
+    public String addUser(@ModelAttribute("new_user") User user,
+                            @RequestParam(value = "select_role", required = false) String[] role) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String s : role) {
+            if (s.equals("ROLE_ADMIN")) {
+                roleSet.add(roleService.list_roles().get(0));
+            } else if (s.equals("ROLE_USER")) {
+                roleSet.add(roleService.list_roles().get(1));
+            }
+        }
 
-        model.addAttribute("listRole", roleService.list_roles());
-        return "add_user";
-    }
-
-    @PostMapping("/add")
-    public String saveUser(@ModelAttribute("new_user") User user,
-                           @RequestParam(value = "newRole", required = false) String[] role) {
-        user.setSetRoles(getAddRole(role));
+        user.setSetRoles(roleSet);
         userService.addUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit/{id}")
-    public String getUserFormUpdate(Model model, @PathVariable("id") long id) {
-        model.addAttribute("upd_user", userService.getUserById(id));
-        model.addAttribute("list_roles", roleService.list_roles());
-        return "update_user";
-    }
+//    @GetMapping("/edit/{id}")
+//    public String getUserFormUpdate(Model model, @PathVariable("id") long id) {
+//        model.addAttribute("upd_user", userService.getUserById(id));
+//        model.addAttribute("list_roles", roleService.list_roles());
+//        return "update_user";
+//    }
 
-    @PostMapping(value = "/edit/{id}")
-    public String updateUser(@ModelAttribute("upd_user") User user,
-                             @RequestParam(value = "newRole", required = false) String[] role) {
+    @PatchMapping(value = "/{id}")
+    public String updateUser(@ModelAttribute("user") User user,
+                             @RequestParam(value = "select_role", required = false) String[] role) {
         user.setSetRoles(getAddRole(role));
         userService.updateUser(user);
         return "redirect:/admin";
 
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
-    }
+//    @GetMapping(value = "/delete/{id}")
+//    public String deleteUser(@PathVariable("id") Integer id) {
+//        userService.deleteUser(id);
+//        return "redirect:/admin";
+//    }
 
 
     private Set<Role> getAddRole(String[] array) {
@@ -77,5 +88,10 @@ public class AdminController {
             hashSet.add(roleService.findByRole(array[i]));
         }
         return hashSet;
+    }
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/admin";
     }
 }

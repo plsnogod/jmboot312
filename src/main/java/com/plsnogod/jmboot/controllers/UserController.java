@@ -1,6 +1,7 @@
 package com.plsnogod.jmboot.controllers;
 
 
+import com.plsnogod.jmboot.service.UserService;
 import com.plsnogod.jmboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import java.security.Principal;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
 
     @GetMapping
     public String getHomePage() {
@@ -25,7 +26,11 @@ public class UserController {
 
     @GetMapping("/user")
     public String clickMe(Model model, Principal principal) {
-        model.addAttribute("oneUser", userServiceImpl.findByUserByEmail(principal.getName()));
-        return "show_user";
+         userService.getUserByName(principal.getName());
+        return "page_user";
     }
+//    @GetMapping(value = "/user")
+//    public String userInfo(){
+//        return "page_user";
+//    }
 }

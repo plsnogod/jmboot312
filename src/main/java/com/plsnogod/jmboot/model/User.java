@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> setRoles;
 
@@ -82,6 +82,7 @@ public class User implements UserDetails {
     public void setLogin(String login) {
         this.login = login;
     }
+
 
     public void setPassword(String password) {
         this.password = password;
