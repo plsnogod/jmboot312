@@ -1,6 +1,8 @@
 package com.plsnogod.jmboot.controllers;
 
 
+import com.plsnogod.jmboot.dao.UserRepository;
+import com.plsnogod.jmboot.model.User;
 import com.plsnogod.jmboot.service.UserService;
 import com.plsnogod.jmboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.security.Principal;
+
 
 
 @Controller
@@ -19,14 +21,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+
+//    @GetMapping
+//    public String getHomePage() {
+//        return "home_page";
+//    }
+////
     @GetMapping
-    public String getHomePage() {
-        return "home_page";
-    }
-//
-    @GetMapping("/user")
     public String clickMe() {
-//         userService.getUserByName(principal.getName());
+//        userService.getUserByName(User);
         return "page_user";
     }
 //    @GetMapping

@@ -34,10 +34,10 @@
                     <li class="nav-item active text-white-50">
 
                         <h5>with roles:
-                            <span sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                            <span sec:authorize="hasRole('ROLE_ADMIN')">
                                ROLE_ADMIN
                             </span>
-                            <span sec:authorize="hasAnyRole('ROLE_USER')">
+                            <span sec:authorize="hasRole('ROLE_USER')">
                                 ROLE_USER
                             </span>
                         </h5>
@@ -99,8 +99,9 @@
                                         <td th:text="${user.lastname}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.login}"></td>
+<!--                                        <td th:text="${user.getRolesSet()}"></td>-->
                                         <td>
-                                            <p th:each="userRole : ${user.setRoles}">
+                                            <p th:each="userRole : ${user.rolesSet}">
                                                 <span th:text="${userRole.getNameRoles()}">role</span>
                                             </p>
                                         </td>
@@ -146,9 +147,9 @@
                                                    id="exampleInputEmail1" aria-describedby="emailHelp">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputUser1"><b>Login</b></label>
+                                            <label for="exampleInputLogin1"><b>Login</b></label>
                                             <input type="text" th:field="*{login}" class="form-control mb-1 col-4"
-                                                   id="exampleInputUser1" aria-describedby="emailHelp">
+                                                   id="exampleInputLogin1" aria-describedby="loginHelp">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1"><b>Password</b></label>
@@ -187,7 +188,7 @@
             <div class="modal-content text-center font-weight-bold">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit user</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -246,7 +247,7 @@
                         <div>
                             <label>Role:
                                 <select multiple size="2" name="select_roles" class="form-control"
-                                        id="exampleFormControlSelect2">
+                                        id="exampleFormControlSelect1">
                                     <option th:each="role : ${all_roles}" th:value="${role.getNameRoles()}"
                                             th:text="${role.getAuthority() == 'ROLE_ADMIN'} ? 'ROLE_ADMIN' : 'ROLE_USER'"
                                             class="form-control mb-1"></option>
@@ -273,13 +274,13 @@
             <div class="modal-content text-center font-weight-bold">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete User</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">
+                <form th:method="DELETE" th:action="@{/{id} (id=${user.id})}">
                     <div align="center">
                         <div class="modal-body">
                             <label for="idDel" class="col-form-label">ID</label>

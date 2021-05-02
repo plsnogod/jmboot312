@@ -27,20 +27,20 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<Role> setRoles;
+    private Set<Role> rolesSet;
 
 
     public User() {
     }
 
 
-    public User( String name, String lastname, String email, String login, String password, Set<Role> setRoles) {
+    public User(String name, String lastname, String email, String login, String password, Set<Role> rolesSet) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.login = login;
         this.password = password;
-        this.setRoles = setRoles;
+        this.rolesSet = rolesSet;
     }
 
     public long getId() {
@@ -88,12 +88,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Set<Role> getSetRoles() {
-        return setRoles;
+    public Set<Role> getRolesSet() {
+        return rolesSet;
     }
 
-    public void setSetRoles(Set<Role> setRoles) {
-        this.setRoles = setRoles;
+    public void setRolesSet(Set<Role> setRoles) {
+        this.rolesSet = setRoles;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return getSetRoles();
+        return getRolesSet();
     }
 
     @Override
