@@ -1,6 +1,5 @@
 package com.plsnogod.jmboot.service;
 
-import com.plsnogod.jmboot.dao.RoleRepository;
 import com.plsnogod.jmboot.model.Role;
 import com.plsnogod.jmboot.model.User;
 import com.plsnogod.jmboot.dao.UserRepository;
@@ -25,8 +24,6 @@ import java.util.Set;
 public class UserServiceImpl implements  UserService {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Override
     @Transactional
@@ -49,33 +46,10 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     @Transactional
-    public User viewUser(long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.get();
-    }
-
-    @Override
-    @Transactional
-    public Role viewRole(long id) {
-        Optional<Role> optionalUser = roleRepository.findById(id);
-
-        return optionalUser.get();
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(User user, String[] role) {
-        Set<Role> rols = new HashSet<>();
-        for (String s : role) {
-            if (s.equals("ROLE_ADMIN")) {
-                rols.add(viewRole(1));
-            } else {
-                rols.add(viewRole(2));
-            }
-        }
-        user.setRolesSet(rols);
+    public void updateUser(User user) {
         userRepository.save(user);
     }
+
     @Override
     @Transactional
     public void deleteUser(long id) {
@@ -96,9 +70,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     @Transactional
-    public User findByUserName(String userName) {
-        return userRepository.getUserByName(userName);
+    public User getUserByName(String name) {
+        return userRepository.getUserByName(name);
     }
 }
-
-
