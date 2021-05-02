@@ -31,10 +31,10 @@
                     <li class="nav-item active text-white-50">
 
                         <h5>with roles:
-                            <span sec:authorize="hasRole('ROLE_ADMIN')">
+                            <span sec:authorize="hasAnyRole('ROLE_ADMIN')">
                                 ROLE_ADMIN
                             </span>
-                            <span sec:authorize="hasRole('ROLE_USER')">
+                            <span sec:authorize="hasAnyRole('ROLE_USER')">
                                 ROLE_USER
                             </span>
                         </h5>
@@ -81,11 +81,12 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <th><span sec:authentication="principal.id"></span></th>
-                                <th><span sec:authentication="principal.name"></span></th>
-                                <th><span sec:authentication="principal.lastName"></span></th>
-                                <th><span sec:authentication="principal.email"></span></th>
-                                <th><span sec:authentication="principal.authorities"></span></th>
+                                <th><span sec:authentication="user.id"></span></th>
+                                <th><span sec:authentication="user.name"></span></th>
+                                <th><span sec:authentication="user.lastName"></span></th>
+                                <th><span sec:authentication="user.email"></span></th>
+                                <th><span sec:authentication="user.login"></span></th>
+                                <th><span sec:authentication="user.authorities"></span></th>
                             </tr>
                             </tbody>
                         </table>

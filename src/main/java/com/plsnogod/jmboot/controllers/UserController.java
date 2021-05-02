@@ -30,7 +30,6 @@ public class UserController {
 ////
     @GetMapping
     public String clickMe() {
-//        userService.getUserByName(User);
         return "page_user";
     }
 //    @GetMapping
