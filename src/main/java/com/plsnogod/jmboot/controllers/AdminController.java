@@ -73,6 +73,17 @@ public class AdminController {
     @PostMapping(value = "/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @RequestParam(value = "select_roles", required = false) String[] role) {
+
+        Set<Role> roleSet1 = new HashSet<>();
+        for (String s : role) {
+            if (s.equals("ROLE_ADMIN")) {
+                roleSet1.add(roleService.list_roles().get(0));
+            } else if (s.equals("ROLE_USER")) {
+                roleSet1.add(roleService.list_roles().get(1));
+            }
+        }
+
+        user.setRolesSet(roleSet1);
         userService.updateUser(user);
         return "redirect:/admin";
 
