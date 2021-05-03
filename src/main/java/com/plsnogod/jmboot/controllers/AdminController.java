@@ -15,13 +15,18 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class AdminController {
     @Autowired
     private RoleService roleService;
 
     @Autowired
     private UserService userService;
+
+    @GetMapping(value = "/user")
+    public String clickMe() {
+        return "page_user";
+    }
 
     @GetMapping("/admin")
     public String showAllUsers(ModelMap model) {
@@ -65,7 +70,7 @@ public class AdminController {
 //        return "update_user";
 //    }
 
-    @PatchMapping(value = "/{id}")
+    @PostMapping(value = "/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @RequestParam(value = "select_roles", required = false) String[] role) {
         userService.updateUser(user);
@@ -73,11 +78,6 @@ public class AdminController {
 
     }
 
-//    @GetMapping(value = "/delete/{id}")
-//    public String deleteUser(@PathVariable("id") long id) {
-//        userService.deleteUser(id);
-//        return "redirect:/admin";
-//    }
 
 
 //    private Set<Role> getAddRole(String[] array) {
@@ -87,7 +87,7 @@ public class AdminController {
 //        }
 //        return hashSet;
 //    }
-    @DeleteMapping(value = "/{id}")
+    @PostMapping(value = "/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
