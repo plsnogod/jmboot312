@@ -80,13 +80,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th><span sec:authentication="user.id"></span></th>
-                                <th><span sec:authentication="user.name"></span></th>
-                                <th><span sec:authentication="user.lastName"></span></th>
-                                <th><span sec:authentication="user.email"></span></th>
-                                <th><span sec:authentication="user.login"></span></th>
-                                <th><span sec:authentication="user.authorities"></span></th>
+                                <tr>
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.lastname}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.login}"></td>
                             </tr>
                             </tbody>
                         </table>

@@ -6,10 +6,12 @@ import com.plsnogod.jmboot.service.RoleService;
 import com.plsnogod.jmboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +26,13 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping(value = "/user")
-    public String clickMe() {
+    public String clickMe(Model model, Principal principal) {
+        model.addAttribute("user", userService.getUserByName(principal.getName()));
         return "page_user";
     }
 
     @GetMapping("/admin")
-    public String showAllUsers(ModelMap model) {
+    public String showAllUsers(ModelMap model, Principal principal) {
         List<User> list_user = userService.showAllUsers();
         model.addAttribute("all_roles", roleService.list_roles());
         model.addAttribute("all_us", list_user);
@@ -38,13 +41,6 @@ public class AdminController {
         return "table_users";
     }
 
-//
-//    @GetMapping("/add_user")
-//    public String getUserForm(Model model) {
-//
-//        model.addAttribute("listRole", roleService.list_roles());
-//        return "add_user";
-//    }
 
     @PostMapping("/admin")
     public String addUser(@ModelAttribute("new_user") User user,
@@ -62,13 +58,6 @@ public class AdminController {
         userService.addUser(user);
         return "redirect:/admin";
     }
-
-//    @GetMapping("/edit/{id}")
-//    public String getUserFormUpdate(Model model, @PathVariable("id") long id) {
-//        model.addAttribute("upd_user", userService.getUserById(id));
-//        model.addAttribute("list_roles", roleService.list_roles());
-//        return "update_user";
-//    }
 
     @PostMapping(value = "/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user,
@@ -89,15 +78,6 @@ public class AdminController {
 
     }
 
-
-
-//    private Set<Role> getAddRole(String[] array) {
-//        HashSet<Role> hashSet = new HashSet<>();
-//        for (int i = 0; i < array.length; i++) {
-//            hashSet.add(roleService.findByRole(array[i]));
-//        }
-//        return hashSet;
-//    }
     @PostMapping(value = "/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);

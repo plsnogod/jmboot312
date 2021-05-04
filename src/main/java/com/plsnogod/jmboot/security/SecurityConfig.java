@@ -27,10 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
@@ -43,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf() // защита от атак
                 .disable() // неактивность поля.
                 .authorizeRequests() // Позволяет ограничивать доступ на основе HttpServletRequest используемых RequestMatcher реализаций
-               // .antMatchers("/", "/login").permitAll()
+                // .antMatchers("/", "/login").permitAll()
                 .antMatchers("/", "/login").not().fullyAuthenticated()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') ")
                 .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")

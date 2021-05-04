@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -15,9 +16,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public Role findByRole(String nameRoles){
+    public Role findByRole(String nameRoles) {
         return roleRepository.findRoleByNameRoles(nameRoles);
     }
+
     @Override
     @Transactional
     public List<Role> list_roles() {
